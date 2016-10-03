@@ -15,18 +15,27 @@ class SmallSMILHandler(ContentHandler):
         self.textstream = ''
         self.atributos_rlayout = ['width', 'height', 'background-color']
         self.atributos_region = ['id', 'top', 'bottom', 'left', 'right']
+        self.atributos_img = ['src', 'region', 'begin', 'dur']
+        self.atributos_audio = ['src', 'begin', 'dur']
+        self.atributos_textstream = ['src', 'region']
+        
+    def get_tags(self, name, attrs):
+        '''Método que devuelve lista con las etiquetas'''
+        
+             
+   
     
     def startElement(self, name, attrs):
         '''Método empleado al abrir una etiqueta'''
         if name == 'root-layout':
             for atributo in self.atributos_rlayout:
                 self.rlayout = attrs.get(atributo, '')
-                print(self.rlayout)
+                print(str(atributo) + ' ' + self.rlayout)
         
         if name == 'region':
             for atributo in self.atributos_region:
                 self.region = attrs.get(atributo, '')
-                print(self.region)
+                print(str(atributo) + '-->' + self.region)
         
     def contenido(self, name, attrs):
         '''Método empleado para extraer la información relevante'''
