@@ -4,52 +4,90 @@
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 
+
 class SmallSMILHandler(ContentHandler):
     '''Clase para extraer la información relevante del fichero XML'''
-    
-    def __init__ (self):
-        
-#Para iterar        self.etiquetas = ['root-layout', 'region', 'img', 'audio', 
-#                          'textsstream']
-        
-        self.atributos_rlayout = ['width', 'height', 'background-color']
-        self.atributos_region = ['id', 'top', 'bottom', 'left', 'right']
-        self.atributos_img = ['src', 'region', 'begin', 'dur']
-        self.atributos_audio = ['src', 'begin', 'dur']
-        self.atributos_textstream = ['src', 'region']
-        
-        self.dicc_rlayout = {}
-        self.dicc_region = {}
-        self.dicc_img = {}
-        self.dicc_audio = {}
-        self.dicc_textstream = {}
-        
-        self.lista_etiqs = [self.dicc_rlayout, self.dicc_region, self.dicc_img,
-                            self.dicc_audio, self.dicc_textstream]
-                            
-        
+
+    def __init__(self):
+
+        self.atributos_rlayout = ['etiqueta', 'width',
+            'height', 'background-color']
+        self.atributos_region = ['etiqueta', 'id', 'top', 'bottom', 'left',
+                                 'right']
+        self.atributos_img = ['etiqueta', 'src', 'region', 'begin', 'dur']
+        self.atributos_audio = ['etiqueta', 'src', 'begin', 'dur']
+        self.atributos_textstream = ['etiqueta', 'src', 'region']
+
+        self.dicc_aux = {}
+# 1 dicc por cada etiqueta, que se vaciara cuando pasemos a la sig. etiqueta
+
+        self.lista_etiqs = []   # Donde guardaremos los dicc_aux
+
     def startElement(self, name, attrs):
         '''Método empleado al abrir una etiqueta'''
-        
+
         if name == 'root-layout':
             for atributo in self.atributos_rlayout:
-                self.dicc_rlayout[atributo] = attrs.get(atributo, '')
+                if atributo == 'etiqueta':
+                    self.dicc_aux[atributo] = name
+                else:
+                    self.dicc_aux[atributo] = attrs.get(atributo, '')
+                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+            print('')
+            self.lista_etiqs.append(self.dicc_aux)
+            self.dicc_aux = {}  # Vaciamos para usarlo en la sig. etiqueta
+
         if name == 'region':
             for atributo in self.atributos_region:
-                self.dicc_region[atributo] = attrs.get(atributo, '')
+                if atributo == 'etiqueta':
+                    self.dicc_aux[atributo] = name
+                else:
+                    self.dicc_aux[atributo] = attrs.get(atributo, '')
+                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+            print('')
+            self.lista_etiqs.append(self.dicc_aux)
+            self.dicc_aux = {}
+
         if name == 'img':
             for atributo in self.atributos_img:
-                self.dicc_img[atributo]=attrs.get(atributo,'')
+                if atributo == 'etiqueta':
+                    self.dicc_aux[atributo] = name
+                else:
+                    self.dicc_aux[atributo] = attrs.get(atributo, '')
+                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+            print('')
+            self.lista_etiqs.append(self.dicc_aux)
+            self.dicc_aux = {}
+
         if name == 'audio':
             for atributo in self.atributos_audio:
-                self.dicc_audio[atributo] = attrs.get(atributo, '')
+                if atributo == 'etiqueta':
+                    self.dicc_aux[atributo] = name
+                else:
+                    self.dicc_aux[atributo] = attrs.get(atributo, '')
+                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+            print('')
+            self.lista_etiqs.append(self.dicc_aux)
+            self.dicc_aux = {}
+
         if name == 'textstream':
             for atributo in self.atributos_textstream:
-                self.dicc_textstream[atributo] = attrs.get(atributo, '')
-                
+                if atributo == 'etiqueta':
+                    self.dicc_aux[atributo] = name
+                else:
+                    self.dicc_aux[atributo] = attrs.get(atributo, '')
+                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+            print('')
+            self.lista_etiqs.append(self.dicc_aux)
+            self.dicc_aux = {}
+
+    def get_tags(self):
+        return self.lista_etiqs
+
 if __name__ == '__main__':
 
     parser = make_parser()
     shandler = SmallSMILHandler()
     parser.setContentHandler(shandler)
     parser.parse(open('karaoke.smil'))
+    print(shandler.lista_etiqs)
