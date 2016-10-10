@@ -6,6 +6,7 @@ from xml.sax.handler import ContentHandler
 from xml.sax import make_parser
 from smallsmilhandler import SmallSMILHandler
 import json
+import urllib
 
 def to_json(nombre, fich):
     f_json = nombre[:-4] + "json"
@@ -41,6 +42,19 @@ if __name__ == '__main__':
         print(exit)
 
     to_json(fichero, etiqs)
+
+    print('---------------')
+    print('')
+
+    for line in etiqs:
+        print(line)
+        for attr in line:
+                   
+            if attr == 'src' and line[attr][:4] == 'http':
+                local = line[attr].split('/')[-1]
+                print(local)
+                urllib.request.urlretrieve(line[attr], local)
+                line[attr] = local
     
     
     
