@@ -10,13 +10,11 @@ class SmallSMILHandler(ContentHandler):
 
     def __init__(self):
 
-        self.atributos_rlayout = ['etiqueta', 'width',
-            'height', 'background-color']
-        self.atributos_region = ['etiqueta', 'id', 'top', 'bottom', 'left',
-                                 'right']
-        self.atributos_img = ['etiqueta', 'src', 'region', 'begin', 'dur']
-        self.atributos_audio = ['etiqueta', 'src', 'begin', 'dur']
-        self.atributos_textstream = ['etiqueta', 'src', 'region']
+        self.atrs_rlayout = ['etiqueta', 'width', 'height', 'background-color']
+        self.atrs_region = ['etiqueta', 'id', 'top', 'bottom', 'left', 'right']
+        self.atrs_img = ['etiqueta', 'src', 'region', 'begin', 'dur']
+        self.atrs_audio = ['etiqueta', 'src', 'begin', 'dur']
+        self.atrs_textstream = ['etiqueta', 'src', 'region']
 
         self.dicc_aux = {}
 # 1 dicc por cada etiqueta, que se vaciara cuando pasemos a la sig. etiqueta
@@ -27,57 +25,57 @@ class SmallSMILHandler(ContentHandler):
         '''Método empleado al abrir una etiqueta'''
 
         if name == 'root-layout':
-            for atributo in self.atributos_rlayout:
+            for atributo in self.atrs_rlayout:
                 if atributo == 'etiqueta':
                     self.dicc_aux[atributo] = name
                 else:
                     self.dicc_aux[atributo] = attrs.get(atributo, '')
-                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
-            print('')
+                # print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+                # print('')
             self.lista_etiqs.append(self.dicc_aux)
             self.dicc_aux = {}  # Vaciamos para usarlo en la sig. etiqueta
 
         if name == 'region':
-            for atributo in self.atributos_region:
+            for atributo in self.atrs_region:
                 if atributo == 'etiqueta':
                     self.dicc_aux[atributo] = name
                 else:
                     self.dicc_aux[atributo] = attrs.get(atributo, '')
-                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
-            print('')
+                # print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+                # print('')
             self.lista_etiqs.append(self.dicc_aux)
             self.dicc_aux = {}
 
         if name == 'img':
-            for atributo in self.atributos_img:
+            for atributo in self.atrs_img:
                 if atributo == 'etiqueta':
                     self.dicc_aux[atributo] = name
                 else:
                     self.dicc_aux[atributo] = attrs.get(atributo, '')
-                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
-            print('')
+                # print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+                # print('')
             self.lista_etiqs.append(self.dicc_aux)
             self.dicc_aux = {}
 
         if name == 'audio':
-            for atributo in self.atributos_audio:
+            for atributo in self.atrs_audio:
                 if atributo == 'etiqueta':
                     self.dicc_aux[atributo] = name
                 else:
                     self.dicc_aux[atributo] = attrs.get(atributo, '')
-                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
-            print('')
+                # print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+                # print('')
             self.lista_etiqs.append(self.dicc_aux)
             self.dicc_aux = {}
 
         if name == 'textstream':
-            for atributo in self.atributos_textstream:
+            for atributo in self.atrs_textstream:
                 if atributo == 'etiqueta':
                     self.dicc_aux[atributo] = name
                 else:
                     self.dicc_aux[atributo] = attrs.get(atributo, '')
-                print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
-            print('')
+                # print(atributo + ' --> ' + str(self.dicc_aux[atributo]))
+                # print('')
             self.lista_etiqs.append(self.dicc_aux)
             self.dicc_aux = {}
 
